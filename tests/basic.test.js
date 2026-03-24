@@ -2,7 +2,7 @@
  * LinkFlow 基础测试
  */
 
-const LinkFlow = require('./src/linkflow.js');
+const LinkFlow = require('../src/linkflow.js');
 
 async function test() {
   console.log('=== LinkFlow v0.5.0 测试 ===\n');
