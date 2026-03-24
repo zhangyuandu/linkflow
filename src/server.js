@@ -136,6 +136,12 @@ class LinkFlowServer {
     switch (msg.type) {
       case 'register':
         client.identity = msg.identity;
+        // 发送注册确认给客户端
+        client.ws.send(JSON.stringify({
+          type: 'ack',
+          content: 'Registered successfully',
+          identity: msg.identity
+        }));
         this.broadcast(client, {
           type: 'system',
           content: `${msg.identity.name} 上线`,

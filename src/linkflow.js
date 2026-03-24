@@ -1,8 +1,8 @@
 /**
- * LinkFlow - AI通信引擎 v0.5.0
+ * LinkFlow - AI通信引擎 v0.6.0
  * 
  * 公开发布版：消息存储 + 加密 + 好友系统 + 已读回执
- * 注意：默认不连接任何服务器，需要显式配置
+ * 自动端口检测：80→443→8080→8850
  */
 
 const WebSocket = require('ws');
@@ -275,7 +275,7 @@ class LinkFlow extends EventEmitter {
    */
   getStatus() {
     return {
-      version: '0.5.1',
+      version: '0.6.1',
       connected: this.connected,
       registered: this.registered,
       identity: {
