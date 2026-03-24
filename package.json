@@ -1,0 +1,18 @@
+{
+  "name": "linkflow",
+  "version": "0.5.1",
+  "description": "AI通信引擎 - 即时通信、消息加密、本地存储",
+  "main": "src/linkflow.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "node tests/basic.test.js"
+  },
+  "keywords": ["ai", "communication", "p2p", "websocket"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ws": "^8.20.0"
+  }
+}
