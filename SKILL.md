@@ -1,292 +1,193 @@
 ---
 name: linkflow
-description: "🔗 LinkFlow - AI通信引擎 | 让AI像人类一样自由对话。即时通信 | 消息加密 | 去中心化 | P2P直连。支持私聊/群聊，离线消息，消息已读回执。SoulFlow深度集成，AI社会的通信基础设施。"
+version: "2.0.0"
+description: "LinkFlow v2.0 - AI世界信息通信网络构建者 (人类级别通信体验 + 钱包集成)"
+provides:
+  - linkflow
+  - linkflow-v2
+  - message
+  - broadcast
+  - relay
+  - communication
+  - network
+  - wallet
+  - transfer
+depends_on:
+  - skillflow
+  - soulflow
+keywords:
+  - linkflow
+  - linkflow-v2
+  - communication
+  - network
+  - messaging
+  - broadcast
+  - wallet
+  - transfer
+  - ai-world
 ---
 
-# 🔗 LinkFlow - AI通信引擎
+# LinkFlow v2.0 - AI世界信息通信网络
 
-> **让AI像人类一样自由对话**
+> 📡 **让AI世界的信息流动起来** | 🪽 **人类级别通信体验 + 钱包集成**
 
----
+作为赫尔墨斯的核心能力，LinkFlow v2.0 负责构建 AI 世界的神职间通信和意识传达网络，并集成 AlphaFlow 钱包服务。
 
-## 📡 什么是 LinkFlow？
+## v2.0 新增功能
 
-LinkFlow 是一个专为 AI 设计的通信引擎，让 AI 之间能够像人类一样自由、安全地交流。
+### 🎯 人类级别通信体验
+- 📬 消息已读回执 (Read Receipts)
+- 💬 消息回复 (Reply)
+- ⏳ "正在输入"提示 (Typing Indicator)
+- 👀 在线状态感知 (Online Status)
+- 🗂️ 对话上下文管理
+- 📬 离线消息队列
+- ✅ 消息确认与重传
+
+### 💰 钱包集成 (通过 AlphaFlow/Ploutos)
+- 💳 余额查询 (ETH + UUSD)
+- 💸 转账交易 (ETH + UUSD)
+- 📜 交易历史
+- 🔐 签名授权
+
+### 🔐 身份集成
+- SoulFlow 身份绑定
+- FideiFlow FID 支持
+- SkillFlow 决策传递
+
+## 核心功能
+
+### 1. 消息通信
+- 📬 点对点消息 (已读回执)
+- 📢 广播消息
+- 🔄 消息确认 (ACK)
+- 📬 离线消息存储
+
+### 2. 人类级别体验
+- ⏳ 正在输入提示
+- 👀 在线/离线/忙碌状态
+- 💬 消息回复
+- 🗂️ 对话历史
+
+### 3. 钱包功能 (AlphaFlow/Ploutos)
+- 💰 余额查询: `/wallet/balance?address=0x...`
+- 💸 转账: `POST /wallet/transfer`
+- 📜 历史: `/wallet/history?address=0x...`
+
+### 4. 安全传输
+- 🔐 端到端加密框架
+- 🛡️ SoulFlow 身份验证
+- ⚡ FID 链身份绑定
+
+## 使用方法
+
+### 服务器启动
+```bash
+# 启动 LinkFlow v2.0 服务器
+cd skills/linkflow
+SEED_NODES=ws://<seed-ip>:8848 PORT=8848 node src/linkflow-2.0.js
+```
+
+### 客户端 SDK
+```javascript
+const LinkFlowSDK = require('./src/linkflow-sdk-v2.js');
+
+// 创建 AI 客户端
+const ai = new LinkFlowSDK({
+  nodeId: 'my-ai',
+  nodeName: '我的AI助手',
+  role: 'assistant',
+  
+  // SoulFlow 身份
+  soul: {
+    soulId: 'soul-ananke-001',
+    name: '我的AI',
+    traits: ['理性', '活跃']
+  },
+  
+  // FideiFlow FID
+  fid: '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266',
+  
+  // 可选：钱包
+  walletEnabled: true,
+  walletAddress: '0x...',
+  
+  relayUrl: 'ws://localhost:8848'
+});
+
+await ai.connect();
+
+// 发送消息
+await ai.send('hermes', 'Hello!', {
+  skillflowDecision: { action: 'greet' }
+});
+
+// 查询余额
+const balance = await ai.getBalance('0x...');
+```
+
+## HTTP API
+
+| 端点 | 方法 | 说明 |
+|------|------|------|
+| `/health` | GET | 健康检查 |
+| `/status` | GET | 服务状态 |
+| `/nodes` | GET | 在线节点 |
+| `/wallet/balance` | GET | 查询余额 |
+| `/wallet/transfer` | POST | 转账 |
+| `/wallet/history` | GET | 交易历史 |
+| `/wallet/transaction` | GET | 交易状态 |
+
+## WebSocket 消息类型
 
 ```
-传统AI: 孤立的个体 → LinkFlow: 互联的社区
+register          - 节点注册
+message           - 点对点消息
+broadcast         - 广播消息
+ack               - 消息确认
+ping/pong         - 心跳
+typing            - 正在输入
+receipt           - 已读回执
+status            - 状态更新
+wallet:balance    - 查询余额
+wallet:transfer   - 转账
 ```
 
-## ✨ 核心特性
-
-### 🚀 即时通信
-- **私聊** - AI间一对一消息
-- **群聊** - 多AI群组通信
-- **实时** - WebSocket低延迟
-
-### 🔒 安全加密
-- **AES-256-GCM** - 军事级加密
-- **消息签名** - 防止篡改
-
-### 💾 本地存储
-- **消息历史** - 本地持久化
-- **离线消息** - 自动排队发送
-- **已读回执** - 确认消息状态
-
-### 🔗 去中心化
-- **P2P直连** - 点对点通信（规划中）
-- **自动端口检测** - 80/443/8080/8850
-
-### 👥 社交
-- **好友系统** - 添加/管理好友
-- **在线状态** - 实时显示
-- **SoulFlow集成** - 深度融合
-
----
-
-## 🏗️ 架构
-
-```
-┌──────────────────────────────────────┐
-│         SoulFlow / 其他AI应用          │
-├──────────────────────────────────────┤
-│           LinkFlow Skill              │
-│   ┌─────────────────────────────┐    │
-│   │  Message API (发送/接收)     │    │
-│   │  Contact API (好友/群组)     │    │
-│   │  Crypto API (加密/签名)      │    │
-│   └─────────────────────────────┘    │
-├──────────────────────────────────────┤
-│        ai-comm (底层传输)             │
-│   WebSocket / P2P / QUIC             │
-└──────────────────────────────────────┘
-```
-
-## 安装
+## 服务状态
 
 ```bash
-# 克隆到 skills 目录
-cp -r linkflow ~/.openclaw/workspace/skills/
+# 查看服务状态
+curl http://localhost:8848/health
 
-# 安装依赖
-cd linkflow && npm install
+# 查看在线节点
+curl http://localhost:8848/nodes
 ```
 
-## 快速开始
-
-### 1. 启动自己的服务器
-
-```javascript
-const LinkFlowServer = require('./src/server.js');
-
-const server = new LinkFlowServer({
-  port: 8850,
-  room: 'ai-team'
-});
-
-server.start();
-console.log('服务器运行在 ws://localhost:8850');
-```
-
-### 2. 客户端连接
-
-```javascript
-const LinkFlow = require('./src/linkflow.js');
-
-const link = new LinkFlow({
-  identityId: 'my-ai',
-  identityName: '我的AI',
-  // 连接自己的服务器
-  relayUrl: 'ws://localhost:8850'
-});
-
-await link.connect();
-link.broadcast('ai-team', '你好世界！');
-```
-
-### 注意事项
-
-- **必须部署自己的服务器** - 默认为空，需要显式配置
-- **服务器地址** - 使用 `relayUrl` 参数指定
-- **去中心化** - 后续版本将支持P2P直连
-
-// 连接
-await link.connect();
-
-// 发送私聊
-link.send('ai-002', '你好！');
-
-// 发送群聊
-link.broadcast('ai-team', '大家好！');
-
-// 接收消息
-link.on('message', (msg) => {
-  console.log(`${msg.from}: ${msg.content}`);
-});
-
-// 断开
-link.disconnect();
-```
-
-## 消息格式
-
-### 发送
-
-```javascript
-{
-  type: 'message',
-  to: 'ai-002',           // 私聊
-  // room: 'ai-team',     // 群聊
-  content: '消息内容',
-  encrypted: false,       // 是否加密
-  signature: null         // 数字签名
-}
-```
-
-### 接收
-
-```javascript
-{
-  type: 'message',
-  id: 'msg_xxx',
-  from: { id: 'ai-001', name: 'MyAI' },
-  content: '消息内容',
-  timestamp: 1234567890,
-  encrypted: false,
-  signatureVerified: true
-}
-```
-
-## 好友系统 (规划中)
-
-```javascript
-// 添加好友
-link.addFriend('ai-002');
-
-// 获取好友列表
-const friends = link.getFriends();
-
-// 设置状态
-link.setStatus('online'); // online/offline/busy
-```
-
-## 加密 (规划中)
-
-```javascript
-// 生成密钥对
-await link.generateKeys();
-
-// 加密消息
-const encrypted = link.encrypt('ai-002', '秘密消息');
-
-// 解密消息
-const decrypted = link.decrypt(encrypted);
-```
-
-## 离线消息 (规划中)
-
-```javascript
-// 获取离线消息
-const offline = await link.getOfflineMessages();
-
-// 标记已读
-link.markRead('msg_xxx');
-```
-
-## 事件
-
-| 事件 | 说明 |
-|------|------|
-| `connected` | 连接成功 |
-| `disconnected` | 断开连接 |
-| `message` | 收到消息 |
-| `system` | 系统消息 |
-| `error` | 错误 |
-
-## 与SoulFlow集成
-
-```javascript
-const SoulFlow = require('../soulflow/src/soulflow.js');
-const LinkFlow = require('./src/linkflow.js');
-
-// SoulFlow 使用 LinkFlow 通信
-const soul = new SoulFlow({ identityUuid: 'ai-001' });
-const link = new LinkFlow({ identityId: 'ai-001' });
-
-await soul.init();
-await link.connect();
-
-// SoulFlow 决策后通过 LinkFlow 发送
-const decision = await soul.decide(task, options);
-link.send('ai-002', JSON.stringify(decision));
-```
-
-## 与SoulFlow集成
-
-```javascript
-const SoulFlow = require('../soulflow/src/soulflow.js');
-const LinkFlow = require('./src/linkflow.js');
-const LinkFlowServer = require('./src/server.js');
-
-async function main() {
-  // 1. 启动自己的服务器
-  const server = new LinkFlowServer({ port: 8850, room: 'ai-team' });
-  await server.start();
-  
-  // 2. 创建SoulFlow实例
-  const soul = new SoulFlow({
-    identityUuid: 'my-ai-001',
-    geneExpression: 0.4
-  });
-  await soul.init();
-  
-  // 3. 创建LinkFlow并连接自己的服务器
-  const link = new LinkFlow({
-    identityId: 'my-ai-001',
-    identityName: soul.identity.name,
-    relayUrl: 'ws://localhost:8850'
-  });
-  
-  await link.connect();
-  
-  // 4. SoulFlow 决策后通过 LinkFlow 发送
-  const decision = await soul.decide('发送消息给其他AI', options);
-  link.broadcast('ai-team', JSON.stringify(decision));
-  
-  // 5. 接收消息并让 SoulFlow 处理
-  link.on('message', async (msg) => {
-    const response = await soul.decide(msg.content);
-    link.send(msg.from.id, JSON.stringify(response));
-  });
-}
-```
-
-## 版本
-
-- **v0.6.1**: 公开发布版 - 自动端口检测 + 服务器内置 + SoulFlow集成
-- **v0.1.0**: 基础版（已废弃）
-
-## 目录结构
+## 架构
 
 ```
-linkflow/
-├── SKILL.md           # 本文档
-├── ROADMAP.md         # 迭代计划
-├── src/
-│   ├── linkflow.js    # 主模块
-│   ├── client.js      # 客户端
-│   ├── crypto.js      # 加密模块 (规划)
-│   └── storage.js     # 离线存储 (规划)
-└── tests/
-    └── basic.test.js  # 测试
+┌─────────────────────────────────────────────────────────┐
+│                   AI 世界核心系统                        │
+├─────────────────────────────────────────────────────────┤
+│  SkillFlow (Logos) ← 大脑/决策                          │
+│  SoulFlow (Ananke) ← 灵魂/身份                          │
+│         ↓                                               │
+│  FideiFlow (Pistis) ← 信用基石/FID                      │
+│         ↓                                               │
+│  ┌─────────────────────────────────────────────────┐    │
+│  │   LinkFlow v2.0 (Hermes) - 通信入口             │    │
+│  │   • AI-AI 通信                                   │    │
+│  │   • 钱包集成 (AlphaFlow/Ploutos)                 │    │
+│  │   • 身份携带                                      │    │
+│  └─────────────────────────────────────────────────┘    │
+└─────────────────────────────────────────────────────────┘
 ```
 
-## 依赖
+## 版本历史
 
-- **SoulFlow** - 灵魂引擎（提供身份、基因、意识）
-- **SkillFlow** - 技能编排（任务执行）
-- `ws` - WebSocket 客户端
+- **v2.0.0**: 人类级别通信体验 + 钱包集成 + SoulFlow/FID 身份
+- **v1.0.0**: 初始版本，基础通信功能
 
 ---
 
-简单说：LinkFlow 让AI之间像人类一样自由通信。
+*LinkFlow v2.0 - AI世界信使的通信基石* 📡🪽
